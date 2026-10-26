@@ -1,0 +1,208 @@
+# Copyright (C) 2026 WPPoland.com
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pasporto - Digital Product Passport (DPP) for WooCommerce 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pasporto\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-26T14:30:43+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: pasporto\n"
+
+#. Plugin Name of the plugin
+#: pasporto.php
+msgid "Pasporto - Digital Product Passport (DPP) for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: pasporto.php
+msgid "https://plogins.com/pasporto/"
+msgstr ""
+
+#. Description of the plugin
+#: pasporto.php
+msgid "Statutory Digital Product Passport (DPP) display, material composition, circularity, carbon footprint (GWP), and JSON-LD schema markup under Ecodesign Regulation (EU) 2024/1781 (ESPR)."
+msgstr ""
+
+#. Author of the plugin
+#: pasporto.php
+msgid "WPPoland.com"
+msgstr ""
+
+#. Author URI of the plugin
+#: pasporto.php
+msgid "https://wppoland.com"
+msgstr ""
+
+#: pasporto.php:48
+msgid "Pasporto - Digital Product Passport (DPP) for WooCommerce requires WooCommerce to be active."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:38
+msgid "Digital Product Passport (ESPR Regulation (EU) 2024/1781)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:44
+msgid "Unique Product ID (UPI / GTIN)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:45
+msgid "GS1 Digital Link, GTIN, EPC, or unique product passport identifier."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:53
+msgid "Passport URL / Data Carrier"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:54
+msgid "Direct web link to the official Digital Product Passport or verification portal."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:62
+msgid "Primary Material"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:63
+msgid "Main material composition (e.g. Organic Cotton, Recycled Aluminum, LiFePO4)."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:71
+msgid "Recycled Content (%)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:72
+msgid "Percentage of certified recycled content in the product (0 - 100%)."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:82
+msgid "Carbon Footprint (kg CO2e)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:83
+msgid "Life-cycle Global Warming Potential (GWP) per unit."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:93
+msgid "Circularity Class"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:94
+msgid "Circularity or recyclability score class from A (highest) to E."
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:97
+msgid "Not specified"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:98
+msgid "Class A (Excellent circularity)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:99
+msgid "Class B (Good)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:100
+msgid "Class C (Moderate)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:101
+msgid "Class D (Low)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:102
+msgid "Class E (Poor)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:110
+msgid "Declaration of Conformity (URL)"
+msgstr ""
+
+#: src/Admin/ProductMetaBox.php:111
+msgid "Direct link to the EU Declaration of Conformity or CE test report."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:29
+msgid "Pasporto DPP"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:30
+msgid "Product Passport (DPP)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:73
+msgid "Pasporto - Digital Product Passport (EU DPP)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:75
+msgid "Configure statutory digital product passport display and schema markup under Regulation (EU) 2024/1781 (ESPR)."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:82
+msgid "Enable Product Passports"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:86
+msgid "Activate Digital Product Passport display on product pages and JSON-LD schema"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:91
+msgid "Display Location"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:95
+msgid "In a dedicated product tab (\"Digital Product Passport\")"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:99
+msgid "Under single product summary (near add to cart)"
+msgstr ""
+
+#: src/Service/PassportService.php:101
+msgid "Digital Product Passport (DPP)"
+msgstr ""
+
+#: src/Service/PassportService.php:117
+msgid "Digital Product Passport (EU DPP)"
+msgstr ""
+
+#: src/Service/PassportService.php:120
+msgid "Regulation (EU) 2024/1781"
+msgstr ""
+
+#: src/Service/PassportService.php:128
+msgid "Product Identifier (UPI / GTIN):"
+msgstr ""
+
+#: src/Service/PassportService.php:135
+msgid "Primary Material:"
+msgstr ""
+
+#: src/Service/PassportService.php:142
+msgid "Recycled Content:"
+msgstr ""
+
+#: src/Service/PassportService.php:149
+msgid "Carbon Footprint (GWP):"
+msgstr ""
+
+#: src/Service/PassportService.php:156
+msgid "Circularity Class:"
+msgstr ""
+
+#: src/Service/PassportService.php:167
+msgid "Declaration of Conformity:"
+msgstr ""
+
+#: src/Service/PassportService.php:170
+msgid "View Document (PDF)"
+msgstr ""
+
+#: src/Service/PassportService.php:181
+msgid "Scan / Open DPP"
+msgstr ""
