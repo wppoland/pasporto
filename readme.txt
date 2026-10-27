@@ -1,4 +1,4 @@
-=== Pasporto - Digital Product Passport (DPP) for WooCommerce ===
+=== Pasporto - Digital Product Passport (DPP) ===
 Contributors: motylanogha
 Tags: woocommerce, digital product passport, dpp, espr, circularity
 Requires at least: 6.5

@@ -1,4 +1,4 @@
-# Pasporto - Digital Product Passport (DPP) for WooCommerce
+# Pasporto - Digital Product Passport (DPP)
 
 Digital Product Passport (DPP) display, material composition, circularity, carbon footprint (GWP), and JSON-LD schema markup for WooCommerce under Ecodesign Regulation (EU) 2024/1781 (ESPR) and Battery Regulation (EU) 2023/1542.
 
