@@ -42,13 +42,6 @@ final class Plugin
         $this->passportService->registerHooks();
         $this->productMetaBox->registerHooks();
         $this->settingsPage->registerHooks();
-
-        add_action('init', [$this, 'loadTextdomain']);
-    }
-
-    public function loadTextdomain(): void
-    {
-        load_plugin_textdomain('pasporto', false, dirname(plugin_basename(PLUGIN_FILE)) . '/languages');
     }
 
     public function getPassportService(): PassportService

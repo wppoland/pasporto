@@ -34,6 +34,8 @@ final class ProductMetaBox implements HasHooks
         $product = wc_get_product($post->ID);
         $dpp     = $product instanceof \WC_Product ? $this->passportService->getPassportData($product) : null;
 
+        wp_nonce_field('pasporto_save_product_fields', 'pasporto_product_nonce');
+
         echo '<div class="options_group pasporto-options-group">';
         echo '<h4 style="padding-left:12px;">' . esc_html__('Digital Product Passport (ESPR Regulation (EU) 2024/1781)', 'pasporto') . '</h4>';
 
@@ -117,21 +119,35 @@ final class ProductMetaBox implements HasHooks
 
     public function saveProductFields(int $productId): void
     {
+        if (
+            ! isset($_POST['pasporto_product_nonce']) ||
+            ! wp_verify_nonce(sanitize_key(wp_unslash($_POST['pasporto_product_nonce'])), 'pasporto_save_product_fields')
+        ) {
+            return;
+        }
+
+        if (! current_user_can('edit_post', $productId)) {
+            return;
+        }
+
         $product = wc_get_product($productId);
         if (! $product instanceof \WC_Product) {
             return;
         }
 
-        $input = isset($_POST['_pasporto_dpp']) && is_array($_POST['_pasporto_dpp']) ? $_POST['_pasporto_dpp'] : [];
+        $input = isset($_POST['_pasporto_dpp']) && is_array($_POST['_pasporto_dpp'])
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized individually below
+            ? (array) wp_unslash($_POST['_pasporto_dpp'])
+            : [];
 
         $sanitized = [
-            'unique_id' => sanitize_text_field((string) ($input['unique_id'] ?? '')),
-            'passport_url' => esc_url_raw((string) ($input['passport_url'] ?? '')),
-            'primary_material' => sanitize_text_field((string) ($input['primary_material'] ?? '')),
-            'recycled_percent' => isset($input['recycled_percent']) && $input['recycled_percent'] !== '' ? min(100.0, max(0.0, (float) $input['recycled_percent'])) : '',
-            'carbon_footprint' => isset($input['carbon_footprint']) && $input['carbon_footprint'] !== '' ? max(0.0, (float) $input['carbon_footprint']) : '',
-            'circularity_class' => in_array(($input['circularity_class'] ?? ''), ['A', 'B', 'C', 'D', 'E'], true) ? $input['circularity_class'] : '',
-            'conformity_doc_url' => esc_url_raw((string) ($input['conformity_doc_url'] ?? '')),
+            'unique_id' => isset($input['unique_id']) ? sanitize_text_field((string) $input['unique_id']) : '',
+            'passport_url' => isset($input['passport_url']) ? esc_url_raw((string) $input['passport_url']) : '',
+            'primary_material' => isset($input['primary_material']) ? sanitize_text_field((string) $input['primary_material']) : '',
+            'recycled_percent' => isset($input['recycled_percent']) && '' !== $input['recycled_percent'] ? min(100.0, max(0.0, (float) $input['recycled_percent'])) : '',
+            'carbon_footprint' => isset($input['carbon_footprint']) && '' !== $input['carbon_footprint'] ? max(0.0, (float) $input['carbon_footprint']) : '',
+            'circularity_class' => isset($input['circularity_class']) && in_array($input['circularity_class'], ['A', 'B', 'C', 'D', 'E'], true) ? $input['circularity_class'] : '',
+            'conformity_doc_url' => isset($input['conformity_doc_url']) ? esc_url_raw((string) $input['conformity_doc_url']) : '',
         ];
 
         $product->update_meta_data(PassportService::META_PASSPORT_DATA, $sanitized);
