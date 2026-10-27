@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Pasporto - Digital Product Passport (DPP)
  * Plugin URI:        https://plogins.com/pasporto/
- * Description:       Digital Product Passport (DPP) display, material composition, circularity, carbon footprint, and schema markup under Ecodesign Regulation (EU) 2024/1781.
+ * Description:       Digital Product Passport (DPP) display, circularity, carbon footprint, and schema markup under Ecodesign Regulation (EU) 2024/1781.
  * Version:           1.0.0
  * Requires at least: 6.5
  * Requires PHP:      8.1

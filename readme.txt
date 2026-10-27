@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Digital Product Passport (DPP) display, material composition, circularity, carbon footprint, and schema markup under Ecodesign Regulation (EU) 2024/1781.
+Digital Product Passport (DPP) display, circularity, carbon footprint, and schema markup under Ecodesign Regulation (EU) 2024/1781.
 
 == Description ==
 
