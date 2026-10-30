@@ -43,7 +43,7 @@ Pasporto is fully translatable and ships the `pasporto.pot` template. Translatio
 == Installation ==
 
 1. Ensure WooCommerce 8.0 or higher is installed and active.
-2. Install Pasporto and activate it. The passport section is switched on and shown in its own product tab straight away.
+2. Install Pasporto and activate it. The passport section is switched on and appears in its own product tab as soon as a product has passport data.
 3. Optional: open WooCommerce > Product Passport (DPP) to move it under the product summary or switch it off.
 4. Edit a product and fill in the Digital Product Passport fields in the General tab of the product data box.
 
