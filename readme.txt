@@ -4,7 +4,7 @@ Tags: woocommerce, digital product passport, dpp, espr, circularity
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ No. Pasporto operates entirely on your WordPress server. You can link to your ow
 Yes. Product variations inherit the parent product's passport data by default, saving time when managing multiple sizes or colors.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed: deleting the plugin on a multisite network now removes its settings from every site, not only the main one.
 
 = 1.0.0 =
 * Initial release: Statutory EU Digital Product Passport (DPP) display, material composition, circularity, carbon footprint, and JSON-LD schema markup.
