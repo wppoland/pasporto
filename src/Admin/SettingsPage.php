@@ -39,19 +39,17 @@ final class SettingsPage implements HasHooks
         register_setting(self::PAGE_SLUG, PassportService::OPTION, [
             'type' => 'array',
             'sanitize_callback' => [$this, 'sanitizeSettings'],
-            'default' => [
-                'enabled' => '1',
-                'dpp_position' => 'tab',
-            ],
+            'default' => PassportService::DEFAULTS,
         ]);
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param mixed $input Whatever reached update_option(); not always an array.
      * @return array<string, mixed>
      */
-    public function sanitizeSettings(array $input): array
+    public function sanitizeSettings($input): array
     {
+        $input     = is_array($input) ? $input : [];
         $sanitized = [];
 
         $sanitized['enabled'] = ! empty($input['enabled']) ? '1' : '0';
@@ -66,13 +64,12 @@ final class SettingsPage implements HasHooks
             return;
         }
 
-        $raw      = get_option(PassportService::OPTION, []);
-        $settings = is_array($raw) ? $raw : [];
+        $settings = PassportService::settings();
         ?>
         <div class="wrap pasporto-settings-wrap">
-            <h1><?php echo esc_html__('Pasporto - Digital Product Passport (EU DPP)', 'pasporto'); ?></h1>
+            <h1><?php echo esc_html__('Pasporto - Digital Product Passport (DPP)', 'pasporto'); ?></h1>
             <p class="description">
-                <?php echo esc_html__('Configure statutory digital product passport display and schema markup under Regulation (EU) 2024/1781 (ESPR).', 'pasporto'); ?>
+                <?php echo esc_html__('Choose where the passport data you enter on each product is shown. The same data is added to WooCommerce\'s structured data for the product.', 'pasporto'); ?>
             </p>
 
             <form method="post" action="options.php">
@@ -83,7 +80,7 @@ final class SettingsPage implements HasHooks
                         <td>
                             <label>
                                 <input type="checkbox" name="<?php echo esc_attr(PassportService::OPTION); ?>[enabled]" value="1" <?php checked(! empty($settings['enabled'])); ?> />
-                                <?php echo esc_html__('Activate Digital Product Passport display on product pages and JSON-LD schema', 'pasporto'); ?>
+                                <?php echo esc_html__('Show the Digital Product Passport on product pages and add it to WooCommerce\'s structured data for the product', 'pasporto'); ?>
                             </label>
                         </td>
                     </tr>
@@ -92,7 +89,7 @@ final class SettingsPage implements HasHooks
                         <td>
                             <label>
                                 <input type="radio" name="<?php echo esc_attr(PassportService::OPTION); ?>[dpp_position]" value="tab" <?php checked(($settings['dpp_position'] ?? 'tab') === 'tab'); ?> />
-                                <?php echo esc_html__('In a dedicated product tab ("Digital Product Passport")', 'pasporto'); ?>
+                                <?php echo esc_html__('In its own product tab ("Digital Product Passport (DPP)")', 'pasporto'); ?>
                             </label><br/>
                             <label>
                                 <input type="radio" name="<?php echo esc_attr(PassportService::OPTION); ?>[dpp_position]" value="summary" <?php checked(($settings['dpp_position'] ?? '') === 'summary'); ?> />

@@ -20,12 +20,10 @@ final class ProductMetaBox implements HasHooks
 
     public function registerHooks(): void
     {
-        if (! $this->passportService->isEnabled()) {
-            return;
-        }
-
+        // Fields stay editable while storefront display is switched off.
         add_action('woocommerce_product_options_general_product_data', [$this, 'renderProductFields']);
         add_action('woocommerce_process_product_meta', [$this, 'saveProductFields']);
+        add_action('woocommerce_product_duplicate', [$this->passportService, 'clearIdentityOnDuplicate']);
     }
 
     public function renderProductFields(): void
@@ -37,7 +35,7 @@ final class ProductMetaBox implements HasHooks
         wp_nonce_field('pasporto_save_product_fields', 'pasporto_product_nonce');
 
         echo '<div class="options_group pasporto-options-group">';
-        echo '<h4 style="padding-left:12px;">' . esc_html__('Digital Product Passport (ESPR Regulation (EU) 2024/1781)', 'pasporto') . '</h4>';
+        echo '<h4 style="padding-left:12px;">' . esc_html__('Digital Product Passport (DPP)', 'pasporto') . '</h4>';
 
         woocommerce_wp_text_input([
             'id' => '_pasporto_unique_id',
@@ -52,8 +50,8 @@ final class ProductMetaBox implements HasHooks
             'id' => '_pasporto_passport_url',
             'name' => '_pasporto_dpp[passport_url]',
             'value' => $dpp ? $dpp->getPassportUrl() : '',
-            'label' => __('Passport URL / Data Carrier', 'pasporto'),
-            'description' => __('Direct web link to the official Digital Product Passport or verification portal.', 'pasporto'),
+            'label' => __('Passport URL', 'pasporto'),
+            'description' => __('Web address of this product\'s digital product passport, as supplied by the manufacturer or importer.', 'pasporto'),
             'desc_tip' => true,
         ]);
 
@@ -71,7 +69,7 @@ final class ProductMetaBox implements HasHooks
             'name' => '_pasporto_dpp[recycled_percent]',
             'value' => $dpp && $dpp->getRecycledContentPercent() !== null ? (string) $dpp->getRecycledContentPercent() : '',
             'label' => __('Recycled Content (%)', 'pasporto'),
-            'description' => __('Percentage of certified recycled content in the product (0 - 100%).', 'pasporto'),
+            'description' => __('Share of recycled content in the product, as declared by the manufacturer (0 - 100%).', 'pasporto'),
             'desc_tip' => true,
             'type' => 'number',
             'custom_attributes' => ['min' => '0', 'max' => '100', 'step' => '0.1'],
@@ -92,16 +90,16 @@ final class ProductMetaBox implements HasHooks
             'id' => '_pasporto_circularity_class',
             'name' => '_pasporto_dpp[circularity_class]',
             'value' => $dpp ? $dpp->getCircularityClass() : '',
-            'label' => __('Circularity Class', 'pasporto'),
-            'description' => __('Circularity or recyclability score class from A (highest) to E.', 'pasporto'),
+            'label' => __('Circularity class (manufacturer-declared)', 'pasporto'),
+            'description' => __('Fill in only if the manufacturer states a class from A to E. Pasporto does not calculate it.', 'pasporto'),
             'desc_tip' => true,
             'options' => [
                 '' => __('Not specified', 'pasporto'),
-                'A' => __('Class A (Excellent circularity)', 'pasporto'),
-                'B' => __('Class B (Good)', 'pasporto'),
-                'C' => __('Class C (Moderate)', 'pasporto'),
-                'D' => __('Class D (Low)', 'pasporto'),
-                'E' => __('Class E (Poor)', 'pasporto'),
+                'A' => 'A',
+                'B' => 'B',
+                'C' => 'C',
+                'D' => 'D',
+                'E' => 'E',
             ],
         ]);
 
@@ -110,7 +108,7 @@ final class ProductMetaBox implements HasHooks
             'name' => '_pasporto_dpp[conformity_doc_url]',
             'value' => $dpp ? $dpp->getConformityDocUrl() : '',
             'label' => __('Declaration of Conformity (URL)', 'pasporto'),
-            'description' => __('Direct link to the EU Declaration of Conformity or CE test report.', 'pasporto'),
+            'description' => __('Link to the EU declaration of conformity for this product.', 'pasporto'),
             'desc_tip' => true,
         ]);
 

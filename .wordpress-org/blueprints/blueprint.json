@@ -1,0 +1,29 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "Pasporto - Digital Product Passport (DPP), Live Preview",
+    "author": "WPPoland"
+  },
+  "landingPage": "/wp-admin/admin.php?page=pasporto-settings",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "login": true,
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "woocommerce"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require '/wordpress/wp-load.php';\ndelete_transient('_wc_activation_redirect');\nupdate_option('woocommerce_onboarding_profile', array('skipped'=>true, 'completed'=>true));\nupdate_option('woocommerce_coming_soon', 'no');\nif (function_exists('wc_get_product_id_by_sku') && class_exists('WC_Product_Simple')) {\n  $demo = array(\n    array('Organic Cotton Hoodie', '59', array('unique_id'=>'https://id.gs1.org/01/04012345678901', 'passport_url'=>'https://example.org/dpp/04012345678901', 'primary_material'=>'Organic cotton 80%, recycled polyester 20%', 'recycled_percent'=>20, 'carbon_footprint'=>7.4, 'circularity_class'=>'B', 'conformity_doc_url'=>'')),\n    array('E-Bike Battery Pack 500 Wh', '429', array('unique_id'=>'https://id.gs1.org/01/04012345678918', 'passport_url'=>'https://example.org/dpp/04012345678918', 'primary_material'=>'Lithium-ion (NMC) cells, aluminium housing', 'recycled_percent'=>12, 'carbon_footprint'=>38.5, 'circularity_class'=>'', 'conformity_doc_url'=>'https://example.org/doc/04012345678918')),\n    array('Field Canvas Backpack', '79', array()),\n  );\n  foreach ($demo as $d) {\n    $sku = 'demo-'.sanitize_title($d[0]);\n    if (wc_get_product_id_by_sku($sku)) { continue; }\n    $p = new WC_Product_Simple();\n    $p->set_name($d[0]); $p->set_sku($sku); $p->set_regular_price($d[1]);\n    $p->set_status('publish'); $p->set_catalog_visibility('visible');\n    if ($d[2]) { $p->update_meta_data('_pasporto_dpp_data', $d[2]); }\n    $p->save();\n  }\n}"
+    }
+  ]
+}
