@@ -19,14 +19,33 @@ final class PassportService implements HasHooks
     public const META_PASSPORT_DATA = '_pasporto_dpp_data';
 
     /**
+     * Settings a fresh install runs with, before anything is saved.
+     */
+    public const DEFAULTS = [
+        'enabled' => '1',
+        'dpp_position' => 'tab',
+    ];
+
+    /**
      * @var array<string, mixed>
      */
     private array $settings;
 
     public function __construct()
     {
-        $raw            = get_option(self::OPTION, []);
-        $this->settings = is_array($raw) ? $raw : [];
+        $this->settings = self::settings();
+    }
+
+    /**
+     * Saved settings over the defaults.
+     *
+     * @return array<string, mixed>
+     */
+    public static function settings(): array
+    {
+        $raw = get_option(self::OPTION);
+
+        return array_merge(self::DEFAULTS, is_array($raw) ? $raw : []);
     }
 
     public function isEnabled(): bool
@@ -48,20 +67,12 @@ final class PassportService implements HasHooks
             add_filter('woocommerce_product_tabs', [$this, 'registerPassportTab']);
         }
 
-        add_action('wp_footer', [$this, 'renderJsonLdSchema']);
+        add_filter('woocommerce_structured_data_product', [$this, 'extendStructuredData'], 10, 2);
     }
 
     public function getPassportData(\WC_Product $product): PassportData
     {
         $raw = $product->get_meta(self::META_PASSPORT_DATA, true);
-
-        // Fall back to parent if variation has no specific DPP data
-        if ((! is_array($raw) || empty($raw)) && $product->get_parent_id() > 0) {
-            $parent = wc_get_product($product->get_parent_id());
-            if ($parent instanceof \WC_Product) {
-                $raw = $parent->get_meta(self::META_PASSPORT_DATA, true);
-            }
-        }
 
         return new PassportData(is_array($raw) ? $raw : []);
     }
@@ -112,16 +123,11 @@ final class PassportService implements HasHooks
     {
         ?>
         <div class="pasporto-dpp-container" style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px; padding:16px; margin:16px 0;">
-            <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e2e8f0; padding-bottom:10px; margin-bottom:12px;">
-                <h4 style="margin:0; font-size:1.1em; color:#0f172a;">
-                    &#128220; <?php echo esc_html__('Digital Product Passport (EU DPP)', 'pasporto'); ?>
-                </h4>
-                <span style="font-size:0.8em; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:600;">
-                    <?php echo esc_html__('Regulation (EU) 2024/1781', 'pasporto'); ?>
-                </span>
-            </div>
+            <h4 style="margin:0 0 12px; padding-bottom:10px; border-bottom:1px solid #e2e8f0; font-size:1.1em; color:#0f172a;">
+                <?php echo esc_html__('Digital Product Passport (DPP)', 'pasporto'); ?>
+            </h4>
 
-            <div style="display:grid; grid-template-columns: 1fr auto; gap:16px;">
+            <div style="display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:start;">
                 <table style="width:100%; font-size:0.9em; border-collapse:collapse;">
                     <?php if ($dpp->getUniqueId() !== '') : ?>
                         <tr>
@@ -140,7 +146,7 @@ final class PassportService implements HasHooks
                     <?php if ($dpp->getRecycledContentPercent() !== null) : ?>
                         <tr>
                             <td style="padding:4px 0; color:#64748b;"><strong><?php echo esc_html__('Recycled Content:', 'pasporto'); ?></strong></td>
-                            <td style="padding:4px 0; color:#0f172a; font-weight:600;"><?php echo esc_html((string) $dpp->getRecycledContentPercent()); ?>%</td>
+                            <td style="padding:4px 0; color:#0f172a;"><?php echo esc_html((string) $dpp->getRecycledContentPercent()); ?>%</td>
                         </tr>
                     <?php endif; ?>
 
@@ -153,12 +159,8 @@ final class PassportService implements HasHooks
 
                     <?php if ($dpp->getCircularityClass() !== '') : ?>
                         <tr>
-                            <td style="padding:4px 0; color:#64748b;"><strong><?php echo esc_html__('Circularity Class:', 'pasporto'); ?></strong></td>
-                            <td style="padding:4px 0;">
-                                <span style="display:inline-block; padding:1px 6px; background:#16a34a; color:#fff; border-radius:3px; font-weight:bold;">
-                                    <?php echo esc_html($dpp->getCircularityClass()); ?>
-                                </span>
-                            </td>
+                            <td style="padding:4px 0; color:#64748b;"><strong><?php echo esc_html__('Circularity class (manufacturer-declared):', 'pasporto'); ?></strong></td>
+                            <td style="padding:4px 0; color:#0f172a;"><?php echo esc_html($dpp->getCircularityClass()); ?></td>
                         </tr>
                     <?php endif; ?>
 
@@ -167,7 +169,7 @@ final class PassportService implements HasHooks
                             <td style="padding:4px 0; color:#64748b;"><strong><?php echo esc_html__('Declaration of Conformity:', 'pasporto'); ?></strong></td>
                             <td style="padding:4px 0;">
                                 <a href="<?php echo esc_url($dpp->getConformityDocUrl()); ?>" target="_blank" rel="noopener noreferrer">
-                                    <?php echo esc_html__('View Document (PDF)', 'pasporto'); ?> &#8599;
+                                    <?php echo esc_html__('View document', 'pasporto'); ?> &#8599;
                                 </a>
                             </td>
                         </tr>
@@ -175,35 +177,68 @@ final class PassportService implements HasHooks
                 </table>
 
                 <?php if ($dpp->getPassportUrl() !== '') : ?>
-                    <div style="text-align:center; padding:10px; background:#fff; border:1px solid #e2e8f0; border-radius:4px;">
-                        <a href="<?php echo esc_url($dpp->getPassportUrl()); ?>" target="_blank" rel="noopener noreferrer" style="display:block; text-decoration:none;">
-                            <div style="font-size:2em; line-height:1;">&#128241;</div>
-                            <small style="color:#0284c7; font-weight:600;"><?php echo esc_html__('Scan / Open DPP', 'pasporto'); ?></small>
-                        </a>
-                    </div>
+                    <a href="<?php echo esc_url($dpp->getPassportUrl()); ?>" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px 14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; color:#0369a1; font-weight:600; text-decoration:none; white-space:nowrap;">
+                        <?php echo esc_html__('Open the product passport', 'pasporto'); ?> &#8599;
+                    </a>
                 <?php endif; ?>
             </div>
         </div>
         <?php
     }
 
-    public function renderJsonLdSchema(): void
+    /**
+     * Add the passport data to WooCommerce's own Product node instead of
+     * printing a second one. WooCommerce escapes the JSON-LD it prints.
+     *
+     * @param mixed $markup
+     * @param mixed $product
+     * @return mixed
+     */
+    public function extendStructuredData($markup, $product)
     {
-        if (! is_product()) {
-            return;
-        }
-
-        global $product;
-        if (! $product instanceof \WC_Product) {
-            return;
+        if (! is_array($markup) || ! $product instanceof \WC_Product) {
+            return $markup;
         }
 
         $dpp = $this->getPassportData($product);
         if (! $dpp->hasData()) {
+            return $markup;
+        }
+
+        if ($dpp->getUniqueId() !== '' && empty($markup['identifier'])) {
+            $markup['identifier'] = $dpp->getUniqueId();
+        }
+
+        $props = $dpp->additionalProperties();
+        if ($props !== []) {
+            $existing = isset($markup['additionalProperty']) && is_array($markup['additionalProperty']) ? $markup['additionalProperty'] : [];
+
+            $markup['additionalProperty'] = array_merge($existing, $props);
+        }
+
+        return $markup;
+    }
+
+    /**
+     * A duplicated product is a different product: its identifier and passport
+     * link must not be copied from the original.
+     *
+     * @param mixed $duplicate
+     */
+    public function clearIdentityOnDuplicate($duplicate): void
+    {
+        if (! $duplicate instanceof \WC_Product) {
             return;
         }
 
-        $json = $dpp->toJsonLd();
-        echo '<script type="application/ld+json">' . wp_json_encode($json, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
+        $raw = $duplicate->get_meta(self::META_PASSPORT_DATA, true);
+        if (! is_array($raw) || $raw === []) {
+            return;
+        }
+
+        $raw['unique_id']    = '';
+        $raw['passport_url'] = '';
+        $duplicate->update_meta_data(self::META_PASSPORT_DATA, $raw);
+        $duplicate->save_meta_data();
     }
 }

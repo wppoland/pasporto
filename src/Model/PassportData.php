@@ -28,16 +28,6 @@ final class PassportData
         return trim((string) ($this->data['passport_url'] ?? ''));
     }
 
-    public function getOperatorId(): string
-    {
-        return trim((string) ($this->data['operator_id'] ?? ''));
-    }
-
-    public function getFacilityId(): string
-    {
-        return trim((string) ($this->data['facility_id'] ?? ''));
-    }
-
     public function getPrimaryMaterial(): string
     {
         return trim((string) ($this->data['primary_material'] ?? ''));
@@ -75,11 +65,6 @@ final class PassportData
         return trim((string) ($this->data['conformity_doc_url'] ?? ''));
     }
 
-    public function getRepairGuideUrl(): string
-    {
-        return trim((string) ($this->data['repair_guide_url'] ?? ''));
-    }
-
     public function hasData(): bool
     {
         return $this->getUniqueId() !== '' ||
@@ -87,33 +72,29 @@ final class PassportData
             $this->getPrimaryMaterial() !== '' ||
             $this->getRecycledContentPercent() !== null ||
             $this->getCarbonFootprintKg() !== null ||
-            $this->getCircularityClass() !== '';
+            $this->getCircularityClass() !== '' ||
+            $this->getConformityDocUrl() !== '';
     }
 
     /**
-     * Build JSON-LD structured representation for DPP.
+     * Schema.org PropertyValue entries for WooCommerce's Product node.
      *
-     * @return array<string, mixed>
+     * @return list<array<string, string>>
      */
-    public function toJsonLd(): array
+    public function additionalProperties(): array
     {
-        $json = [
-            '@context' => 'https://schema.org',
-            '@type' => 'Product',
-        ];
-
-        if ($this->getUniqueId() !== '') {
-            $json['identifier'] = $this->getUniqueId();
-        }
+        $props = [];
 
         if ($this->getPassportUrl() !== '') {
-            $json['sameAs'] = $this->getPassportUrl();
+            $props[] = [
+                '@type' => 'PropertyValue',
+                'name' => 'digitalProductPassport',
+                'url' => $this->getPassportUrl(),
+            ];
         }
 
-        $additionalProps = [];
-
         if ($this->getPrimaryMaterial() !== '') {
-            $additionalProps[] = [
+            $props[] = [
                 '@type' => 'PropertyValue',
                 'name' => 'primaryMaterial',
                 'value' => $this->getPrimaryMaterial(),
@@ -121,33 +102,39 @@ final class PassportData
         }
 
         if ($this->getRecycledContentPercent() !== null) {
-            $additionalProps[] = [
+            $props[] = [
                 '@type' => 'PropertyValue',
                 'name' => 'recycledContentPercentage',
-                'value' => (string) $this->getRecycledContentPercent() . '%',
+                'value' => (string) $this->getRecycledContentPercent(),
+                'unitText' => '%',
             ];
         }
 
         if ($this->getCarbonFootprintKg() !== null) {
-            $additionalProps[] = [
+            $props[] = [
                 '@type' => 'PropertyValue',
-                'name' => 'carbonFootprintKgCO2e',
+                'name' => 'carbonFootprint',
                 'value' => (string) $this->getCarbonFootprintKg(),
+                'unitText' => 'kg CO2e',
             ];
         }
 
         if ($this->getCircularityClass() !== '') {
-            $additionalProps[] = [
+            $props[] = [
                 '@type' => 'PropertyValue',
                 'name' => 'circularityClass',
                 'value' => $this->getCircularityClass(),
             ];
         }
 
-        if (! empty($additionalProps)) {
-            $json['additionalProperty'] = $additionalProps;
+        if ($this->getConformityDocUrl() !== '') {
+            $props[] = [
+                '@type' => 'PropertyValue',
+                'name' => 'declarationOfConformity',
+                'url' => $this->getConformityDocUrl(),
+            ];
         }
 
-        return $json;
+        return $props;
     }
 }

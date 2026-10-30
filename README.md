@@ -1,12 +1,13 @@
 # Pasporto - Digital Product Passport (DPP)
 
-Digital Product Passport (DPP) display, material composition, circularity, carbon footprint (GWP), and JSON-LD schema markup for WooCommerce under Ecodesign Regulation (EU) 2024/1781 (ESPR) and Battery Regulation (EU) 2023/1542.
+Shows a Digital Product Passport (DPP) link, product identifier and sustainability data on WooCommerce product pages, and adds the same data to WooCommerce's Product structured data.
 
-## Legal Basis & Directives
+## Legal references
 
-- **ESPR Framework**: Regulation (EU) 2024/1781 of 13 June 2024 establishing a framework for setting ecodesign requirements for sustainable products, Articles 9, 10, 11, 14, and 29.
-- **Batteries DPP**: Regulation (EU) 2023/1542 of 12 July 2023 concerning batteries and waste batteries, Article 77.
-- **Mandatory Ecommerce Display**: Online marketplaces and webshops selling covered goods must display the passport data carrier link and essential sustainability attributes before purchase.
+- Regulation (EU) 2024/1781 (ESPR): a passport is required where a delegated act for the product group says so (Art. 9(1)); dealers ensure customers can easily access it, including in distance selling (Art. 31(2)); the operator placing the product on the market gives dealers a digital copy of the data carrier or the unique product identifier (Art. 10(3)).
+- Regulation (EU) 2023/1542: battery passport from 18 February 2027 for LMT batteries, industrial batteries above 2 kWh and EV batteries (Art. 77(1)).
+
+Pasporto does not create a passport and does not check data against any delegated act.
 
 ## Requirements
 
@@ -18,7 +19,7 @@ Digital Product Passport (DPP) display, material composition, circularity, carbo
 
 Run self-contained test suite:
 ```bash
-php tests/passport-schema-check.php
+composer test
 ```
 
 ## License
