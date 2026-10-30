@@ -70,6 +70,12 @@ The copy keeps the material and sustainability data, but its unique product iden
 = Does Pasporto require an external monthly subscription? =
 No. Pasporto runs entirely on your WordPress server. You link to your own passport and enter the data directly in the product editor.
 
+== Screenshots ==
+
+1. The Digital Product Passport (DPP) tab on a product page, with the identifier, material data, declaration of conformity link and a button that opens the passport.
+2. The passport fields in the General tab of the product data box.
+3. The settings screen under WooCommerce > Product Passport (DPP): display on or off, and tab or product summary placement.
+
 == Changelog ==
 
 = 1.1.0 =

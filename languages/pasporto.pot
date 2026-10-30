@@ -2,21 +2,22 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pasporto - Digital Product Passport (DPP) for WooCommerce 1.0.0\n"
+"Project-Id-Version: Pasporto - Digital Product Passport (DPP) 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pasporto\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T14:30:43+00:00\n"
+"POT-Creation-Date: 2026-10-30T14:12:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: pasporto\n"
 
 #. Plugin Name of the plugin
 #: pasporto.php
-msgid "Pasporto - Digital Product Passport (DPP) for WooCommerce"
+#: src/Admin/SettingsPage.php:70
+msgid "Pasporto - Digital Product Passport (DPP)"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -26,7 +27,7 @@ msgstr ""
 
 #. Description of the plugin
 #: pasporto.php
-msgid "Statutory Digital Product Passport (DPP) display, material composition, circularity, carbon footprint (GWP), and JSON-LD schema markup under Ecodesign Regulation (EU) 2024/1781 (ESPR)."
+msgid "Show a Digital Product Passport (DPP) link, product identifier and sustainability data on WooCommerce product pages."
 msgstr ""
 
 #. Author of the plugin
@@ -44,7 +45,9 @@ msgid "Pasporto - Digital Product Passport (DPP) for WooCommerce requires WooCom
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:38
-msgid "Digital Product Passport (ESPR Regulation (EU) 2024/1781)"
+#: src/Service/PassportService.php:112
+#: src/Service/PassportService.php:127
+msgid "Digital Product Passport (DPP)"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:44
@@ -56,11 +59,11 @@ msgid "GS1 Digital Link, GTIN, EPC, or unique product passport identifier."
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:53
-msgid "Passport URL / Data Carrier"
+msgid "Passport URL"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:54
-msgid "Direct web link to the official Digital Product Passport or verification portal."
+msgid "Web address of this product's digital product passport, as supplied by the manufacturer or importer."
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:62
@@ -76,7 +79,7 @@ msgid "Recycled Content (%)"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:72
-msgid "Percentage of certified recycled content in the product (0 - 100%)."
+msgid "Share of recycled content in the product, as declared by the manufacturer (0 - 100%)."
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:82
@@ -88,35 +91,15 @@ msgid "Life-cycle Global Warming Potential (GWP) per unit."
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:93
-msgid "Circularity Class"
+msgid "Circularity class (manufacturer-declared)"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:94
-msgid "Circularity or recyclability score class from A (highest) to E."
+msgid "Fill in only if the manufacturer states a class from A to E. Pasporto does not calculate it."
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:97
 msgid "Not specified"
-msgstr ""
-
-#: src/Admin/ProductMetaBox.php:98
-msgid "Class A (Excellent circularity)"
-msgstr ""
-
-#: src/Admin/ProductMetaBox.php:99
-msgid "Class B (Good)"
-msgstr ""
-
-#: src/Admin/ProductMetaBox.php:100
-msgid "Class C (Moderate)"
-msgstr ""
-
-#: src/Admin/ProductMetaBox.php:101
-msgid "Class D (Low)"
-msgstr ""
-
-#: src/Admin/ProductMetaBox.php:102
-msgid "Class E (Poor)"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:110
@@ -124,7 +107,7 @@ msgid "Declaration of Conformity (URL)"
 msgstr ""
 
 #: src/Admin/ProductMetaBox.php:111
-msgid "Direct link to the EU Declaration of Conformity or CE test report."
+msgid "Link to the EU declaration of conformity for this product."
 msgstr ""
 
 #: src/Admin/SettingsPage.php:29
@@ -135,74 +118,58 @@ msgstr ""
 msgid "Product Passport (DPP)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:73
-msgid "Pasporto - Digital Product Passport (EU DPP)"
+#: src/Admin/SettingsPage.php:72
+msgid "Choose where the passport data you enter on each product is shown. The same data is added to WooCommerce's structured data for the product."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:75
-msgid "Configure statutory digital product passport display and schema markup under Regulation (EU) 2024/1781 (ESPR)."
-msgstr ""
-
-#: src/Admin/SettingsPage.php:82
+#: src/Admin/SettingsPage.php:79
 msgid "Enable Product Passports"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:86
-msgid "Activate Digital Product Passport display on product pages and JSON-LD schema"
+#: src/Admin/SettingsPage.php:83
+msgid "Show the Digital Product Passport on product pages and add it to WooCommerce's structured data for the product"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:91
+#: src/Admin/SettingsPage.php:88
 msgid "Display Location"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:95
-msgid "In a dedicated product tab (\"Digital Product Passport\")"
+#: src/Admin/SettingsPage.php:92
+msgid "In its own product tab (\"Digital Product Passport (DPP)\")"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:99
+#: src/Admin/SettingsPage.php:96
 msgid "Under single product summary (near add to cart)"
 msgstr ""
 
-#: src/Service/PassportService.php:101
-msgid "Digital Product Passport (DPP)"
-msgstr ""
-
-#: src/Service/PassportService.php:117
-msgid "Digital Product Passport (EU DPP)"
-msgstr ""
-
-#: src/Service/PassportService.php:120
-msgid "Regulation (EU) 2024/1781"
-msgstr ""
-
-#: src/Service/PassportService.php:128
+#: src/Service/PassportService.php:134
 msgid "Product Identifier (UPI / GTIN):"
 msgstr ""
 
-#: src/Service/PassportService.php:135
+#: src/Service/PassportService.php:141
 msgid "Primary Material:"
 msgstr ""
 
-#: src/Service/PassportService.php:142
+#: src/Service/PassportService.php:148
 msgid "Recycled Content:"
 msgstr ""
 
-#: src/Service/PassportService.php:149
+#: src/Service/PassportService.php:155
 msgid "Carbon Footprint (GWP):"
 msgstr ""
 
-#: src/Service/PassportService.php:156
-msgid "Circularity Class:"
+#: src/Service/PassportService.php:162
+msgid "Circularity class (manufacturer-declared):"
 msgstr ""
 
-#: src/Service/PassportService.php:167
+#: src/Service/PassportService.php:169
 msgid "Declaration of Conformity:"
 msgstr ""
 
-#: src/Service/PassportService.php:170
-msgid "View Document (PDF)"
+#: src/Service/PassportService.php:172
+msgid "View document"
 msgstr ""
 
 #: src/Service/PassportService.php:181
-msgid "Scan / Open DPP"
+msgid "Open the product passport"
 msgstr ""

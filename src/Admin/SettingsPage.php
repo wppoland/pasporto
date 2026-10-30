@@ -89,7 +89,7 @@ final class SettingsPage implements HasHooks
                         <td>
                             <label>
                                 <input type="radio" name="<?php echo esc_attr(PassportService::OPTION); ?>[dpp_position]" value="tab" <?php checked(($settings['dpp_position'] ?? 'tab') === 'tab'); ?> />
-                                <?php echo esc_html__('In a dedicated product tab ("Digital Product Passport")', 'pasporto'); ?>
+                                <?php echo esc_html__('In its own product tab ("Digital Product Passport (DPP)")', 'pasporto'); ?>
                             </label><br/>
                             <label>
                                 <input type="radio" name="<?php echo esc_attr(PassportService::OPTION); ?>[dpp_position]" value="summary" <?php checked(($settings['dpp_position'] ?? '') === 'summary'); ?> />
