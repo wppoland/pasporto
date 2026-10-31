@@ -4,7 +4,7 @@ Tags: woocommerce, digital product passport, dpp, espr, circularity
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ No. Pasporto runs entirely on your WordPress server. You link to your own passpo
 3. The settings screen under WooCommerce > Product Passport (DPP): display on or off, and tab or product summary placement.
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed: shop managers can save the settings screen. Saving required a capability the menu did not ask for.
 
 = 1.1.0 =
 * Fixed: on a fresh install the passport section is shown without saving the settings first.

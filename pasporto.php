@@ -3,7 +3,7 @@
  * Plugin Name:       Pasporto - Digital Product Passport (DPP)
  * Plugin URI:        https://plogins.com/pasporto/
  * Description:       Show a Digital Product Passport (DPP) link, product identifier and sustainability data on WooCommerce product pages.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -25,7 +25,7 @@ namespace Pasporto;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.1.0';
+const VERSION     = '1.1.1';
 const PLUGIN_FILE = __FILE__;
 
 define('PASPORTO_DIR', plugin_dir_path(__FILE__));
