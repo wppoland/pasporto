@@ -102,37 +102,6 @@ final class SettingsPage implements HasHooks
                 </table>
                 <?php submit_button(); ?>
             </form>
-            <?php $this->renderCompanionCard(); ?>
-        </div>
-        <?php
-    }
-
-    /**
-     * Cross-recommendation card for sister plugins (Plogins GTIN).
-     * Strictly scoped to the Pasporto settings screen per WordPress.org Guideline 11.
-     */
-    private function renderCompanionCard(): void
-    {
-        $isGtinActive = defined('PloginsGtin\\VERSION') || (function_exists('is_plugin_active') && (is_plugin_active('gtin/plogins-gtin.php') || is_plugin_active('plogins-gtin/plogins-gtin.php')));
-
-        ?>
-        <div class="card" style="max-width: 800px; margin-top: 24px; padding: 18px 22px;">
-            <h2 class="title" style="margin-top: 0; font-size: 15px;"><?php echo esc_html__('Complementary integration: GTIN lookup for WooCommerce', 'pasporto'); ?></h2>
-            <p style="color: #50575e; line-height: 1.5;">
-                <?php echo esc_html__('Pair Pasporto Digital Product Passports with GTIN lookup to source verified EAN/GTIN barcodes and establish seamless traceability for EU ESPR regulations.', 'pasporto'); ?>
-            </p>
-            <?php if ($isGtinActive) : ?>
-                <p style="color: #007017; font-weight: 600; margin-bottom: 0;">
-                    <span class="dashicons dashicons-yes-alt" style="vertical-align: text-bottom;"></span>
-                    <?php echo esc_html__('GTIN lookup is active.', 'pasporto'); ?>
-                </p>
-            <?php else : ?>
-                <p style="margin-bottom: 0;">
-                    <a href="<?php echo esc_url(admin_url('plugin-install.php?s=' . rawurlencode('GTIN lookup for WooCommerce') . '&tab=search&type=term')); ?>" class="button button-secondary">
-                        <?php echo esc_html__('Explore GTIN lookup', 'pasporto'); ?> &rarr;
-                    </a>
-                </p>
-            <?php endif; ?>
         </div>
         <?php
     }
