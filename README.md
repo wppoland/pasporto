@@ -1,5 +1,8 @@
 # Pasporto - Digital Product Passport (DPP)
 
+- **Plugin page:** https://plogins.com/pasporto/
+- **Documentation:** https://plogins.com/pasporto/docs/
+
 Shows a Digital Product Passport (DPP) link, product identifier and sustainability data on WooCommerce product pages, and adds the same data to WooCommerce's Product structured data.
 
 ## Legal references
