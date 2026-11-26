@@ -127,8 +127,8 @@ final class PassportService implements HasHooks
                 <?php echo esc_html__('Digital Product Passport (DPP)', 'pasporto'); ?>
             </h4>
 
-            <div style="display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:start;">
-                <table style="width:100%; font-size:0.9em; border-collapse:collapse;">
+            <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+                <table style="flex:1 1 16rem; min-width:0; font-size:0.9em; border-collapse:collapse;">
                     <?php if ($dpp->getUniqueId() !== '') : ?>
                         <tr>
                             <td style="padding:4px 0; color:#64748b; width:45%;"><strong><?php echo esc_html__('Product Identifier (UPI / GTIN):', 'pasporto'); ?></strong></td>
@@ -177,7 +177,7 @@ final class PassportService implements HasHooks
                 </table>
 
                 <?php if ($dpp->getPassportUrl() !== '') : ?>
-                    <a href="<?php echo esc_url($dpp->getPassportUrl()); ?>" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px 14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; color:#0369a1; font-weight:600; text-decoration:none; white-space:nowrap;">
+                    <a href="<?php echo esc_url($dpp->getPassportUrl()); ?>" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:10px 14px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; color:#0369a1; font-weight:600; text-decoration:none; max-width:100%; box-sizing:border-box;">
                         <?php echo esc_html__('Open the product passport', 'pasporto'); ?> &#8599;
                     </a>
                 <?php endif; ?>
